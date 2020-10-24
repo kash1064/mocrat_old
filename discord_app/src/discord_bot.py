@@ -23,14 +23,10 @@ async def on_message(message):
     try:
         if message.mentions[0].display_name == "mocrat":
 
-            if message.content.split(" ")[1] == "hatebu_top5":
+            if message.content.split(" ")[1] == "hatebu":
                 items = hatebu_utils.return_tophatebu_itposts()
-                i = 0
                 for item in items:
                     await message.channel.send(item[0] + ": " + item[1])
-                    i += 1
-                    if i == 5:
-                        break
 
             else:
                 query = message.content.split(" ")[1]

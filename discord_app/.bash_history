@@ -1,0 +1,3 @@
+ls
+pip freeze
+exit

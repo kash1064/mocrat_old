@@ -1,15 +1,9 @@
-
-
-
-
-
-
-
-
-
-
-
 # コンテナ実行
+docker_exec := docker exec -it
+container := discord_app
+login_container:
+	${docker_exec} ${container} /bin/bash
+
 up_mocrat:
 	docker-compose up
 
