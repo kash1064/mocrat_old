@@ -1,3 +1,0 @@
-ls
-pip freeze
-exit
