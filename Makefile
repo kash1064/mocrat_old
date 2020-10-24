@@ -16,12 +16,19 @@ up_mocrat:
 rc :=
 run_mocrat_app := docker-compose run mocrat_app
 
+# mocrat_app
+login_mocrat_app:
+	${run_mocrat_app} bash
+	
 run_django_manage:
 	${run_mocrat_app} python3 manage.py ${rc}
 
+pipinstall_requirements:
+	${run_mocrat_app} pip install --upgrade -r requirements.txt
+
 # 環境
 chown_user:
-	sudo chown -R $USER:$USER .
+	sudo chown -R ubuntu:ubuntu .
 
 # Git
 day := `date +"%Y_%m_%d"`
