@@ -1,12 +1,7 @@
-import logging
-
 import discord
 
-from mocrat_config.environ_config import env
-from utils import hatebu_utils
-
-logger = logging.getLogger(__name__)
-
+from config.environ_config import env
+import hatebu_utils
 
 DISCORD_TOKEN = env("DISCORD_TOKEN")
 
@@ -14,7 +9,8 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    logger.info("mocrat is loggin")
+    # logger.info("mocrat is loggin")
+    print("mocrat is loggin")
 
 @client.event
 async def on_message(message):
@@ -24,7 +20,7 @@ async def on_message(message):
     # TODO: ちゃんとキレイにする
     try:
         if message.mentions[0].display_name == "mocrat":
-            # await message.channel.send("チュー")
+
             if message.content.split(" ")[1] == "hatebu_top5":
                 items = hatebu_utils.return_tophatebu_itposts()
                 i = 0
