@@ -13,6 +13,9 @@
 up_mocrat:
 	docker-compose up
 
+build_mocrat:
+	docker-compose up --build
+
 rc :=
 run_mocrat_app := docker-compose run mocrat_app
 
@@ -25,6 +28,20 @@ run_django_manage:
 
 pipinstall_requirements:
 	${run_mocrat_app} pip install --upgrade -r requirements.txt
+
+makemigrations:
+	${run_mocrat_app} python3 manage.py makemigrations
+	${run_mocrat_app} python3 manage.py makemigrations mocrat_user
+
+migrate:
+	${run_mocrat_app} python3 manage.py migrate
+
+username=admin
+email=sample@testmail.org
+passwd=Passw0rd
+create_custom_superuser: ## This is create super user for 1line, need name,email,passwd(default=admin,sample@testmail.org,Passw0rd)
+	${run_mocrat_app} python3 ./manage.py custom_create_superuser --username ${username} --email ${email} --password ${passwd}
+
 
 # 環境
 chown_user:
