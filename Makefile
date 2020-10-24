@@ -35,6 +35,7 @@ day := `date +"%Y_%m_%d"`
 m := autopush ${day}
 branch := origin master
 autopush: ## This is auto push module, need commit message(default=autopush)
+	make chown_user
 	git add .
 	git commit -m "${m}"
 	git push ${branch}
