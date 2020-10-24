@@ -1,9 +1,11 @@
 import discord
 
+from config.common_logger import *
 from config.environ_config import env
 
 from hatena import hatebu_utils
 from a3rt import talk_api
+
 
 DISCORD_TOKEN = env("DISCORD_TOKEN")
 
@@ -11,8 +13,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    # logger.info("mocrat is loggin")
-    print("mocrat is loggin")
+    app_logger.info("mocrat is loggin")
 
 @client.event
 async def on_message(message):
