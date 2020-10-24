@@ -16,10 +16,10 @@ up_mocrat:
 build_mocrat:
 	docker-compose up --build
 
-rc :=
-run_mocrat_app := docker-compose run mocrat_app
 
 # mocrat_app
+rc :=
+run_mocrat_app := docker-compose run mocrat_app
 login_mocrat_app:
 	${run_mocrat_app} bash
 	
@@ -42,6 +42,18 @@ passwd=Passw0rd
 create_custom_superuser: ## This is create super user for 1line, need name,email,passwd(default=admin,sample@testmail.org,Passw0rd)
 	${run_mocrat_app} python3 ./manage.py custom_create_superuser --username ${username} --email ${email} --password ${passwd}
 
+# mocrat_db
+PGPASSWORD :=
+PGUSER :=
+PGHOST :=
+PGPORT :=
+PGDATABASE :=
+
+attach_db:
+	${run_mocrat_app} psql -h  -p 5433 -U postgres -W postgres test_db
+	
+clean_database:
+	${run_mocrat_app} sh -c "sleep 1 && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'drop database ${PGDATABASE};' && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'create database ${PGDATABASE};'"
 
 # 環境
 chown_user:

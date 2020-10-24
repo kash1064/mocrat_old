@@ -1,7 +1,9 @@
 import discord
 
 from config.environ_config import env
-import hatebu_utils
+
+from hatena import hatebu_utils
+from a3rt import talk_api
 
 DISCORD_TOKEN = env("DISCORD_TOKEN")
 
@@ -29,6 +31,12 @@ async def on_message(message):
                     i += 1
                     if i == 5:
                         break
+
+            else:
+                query = message.content.split(" ")[1]
+                reply = talk_api.call_talk_api(query)
+                await message.channel.send(reply)
+
     except:
         pass
 
