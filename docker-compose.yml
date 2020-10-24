@@ -31,3 +31,4 @@ services:
       - ./discord_app:/usr/app
     tty: true
     stdin_open: true
+    command: python discord_bot.py
