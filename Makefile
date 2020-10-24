@@ -1,3 +1,29 @@
+
+
+
+
+
+
+
+
+
+
+
+# コンテナ実行
+up_mocrat:
+	docker-compose up
+
+rc :=
+run_mocrat_app := docker-compose run mocrat_app
+
+run_django_manage:
+	${run_mocrat_app} python3 manage.py ${rc}
+
+# 環境
+chown_user:
+	sudo chown -R $USER:$USER .
+
+# Git
 day := `date +"%Y_%m_%d"`
 m := autopush ${day}
 branch := origin master

@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mocrat.urls'
+ROOT_URLCONF = 'mocrat_config.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mocrat.wsgi.application'
+WSGI_APPLICATION = 'mocrat_config.wsgi.application'
 
 
 # Database
