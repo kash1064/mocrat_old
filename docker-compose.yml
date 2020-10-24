@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mocrat_app:
+    build:
+      context: ./mocrat_app
+      dockerfile: Dockerfile
+    container_name: mocrat_main
+    volumes:
+      - ./mocrat_app:/usr/mocrat/app
+    ports:
+      - "8000:8000"
+    tty: true
+    stdin_open: true
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+        - mocrat_db
+    
+  mocrat_db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
