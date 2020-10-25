@@ -16,8 +16,11 @@ class PostText(APIView):
         logger.info("Called mocrat_discord PostText")
 
         webhook_url = request.data["discord_webhook_url"]
+        text = request.data["text"]
         payload = {
-            "content": request.data["text"]
+            "content": text
         }
-        requests.post(webhook_url, json=payload)
-        return Response(status=200)
+        response = requests.post(webhook_url, json=payload)
+        logger.info("Status {}, webhook_url : {}, content : {}".format(response, webhook_url, text))
+
+        return Response(status=None)
