@@ -1,6 +1,11 @@
 ## mocrat_app
 ### mocrat_config
+> Django の設定ファイルと、管理スクリプト
+
 - Djangoの設定ファイル
+
+- admin_utils
+  - error_notify.py
 
 - 環境変数の設定
     - .env
@@ -47,7 +52,6 @@
 - mocrat_config 配下に .env ファイルを作成
 
 ```
-ADMIN_TOKEN=
 AUTH_USER_MODEL=mocrat_user.User
 BASE_URL=https://chiba-moku2.herokuapp.com/
 SECRET_KEY=testhelloworld
