@@ -1,11 +1,11 @@
 # 毎日 07:15 に朝活通知を送信
-15 7 * * * root `curl -X GET http://localhost:8000/mocrat_utils/api/v1/asakatsu_scheduler/ > /dev/null 2>&1`
+15 7 * * * root `cd /home/ubuntu/mocrat && make asakatsu_scheduler > /dev/null 2>&1`
 
 # 毎日 08:30 に朝活通知を送信
 30 8 * * * root `curl -X GET http://localhost:8000/mocrat_utils/api/v1/asakatsu_closing/ > /dev/null 2>&1`
 
 # 毎日 22:30 に振り返り通知
-35 22 * * * root `curl -X POST -H "Content-Type: application/json" -d '{"text":"本日もお疲れ様でした！\n振り返りの時間です！", "discord_webhook_url":""}' http://localhost:8000/mocrat_discord/api/v1/post_text/ > /dev/null 2>&1`
+35 22 * * * root `cd /home/ubuntu/mocrat && make furikaeri_reminder > /dev/null 2>&1`
 
 # 定期的に通知を送信
 * * * * * root 35 22 * * * `curl -X POST -H "Content-Type: application/json" -d '{"text":"定期タスクです！", "discord_webhook_url":""}' http://localhost:8000/mocrat_discord/api/v1/post_text/ > /dev/null 2>&1`
