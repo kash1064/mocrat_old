@@ -1,4 +1,7 @@
 # コンテナ実行
+start_docker:
+	sudo /etc/init.d/docker start
+
 docker_exec := docker exec -it
 container := discord_app
 login_container:
@@ -9,7 +12,6 @@ up_mocrat:
 
 build_mocrat:
 	docker-compose up --build
-
 
 # mocrat_app
 rc :=

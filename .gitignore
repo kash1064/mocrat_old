@@ -4,3 +4,4 @@ debug.log
 *__pycache__/
 *.log
 *history*
+*.local*
