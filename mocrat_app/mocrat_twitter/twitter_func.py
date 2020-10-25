@@ -2,7 +2,6 @@ import logging
 import tweepy
 
 from mocrat_config.environ_config import env
-from mocrat_config.celery import app
 
 logger = logging.getLogger(__name__)
 

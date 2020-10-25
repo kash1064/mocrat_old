@@ -8,6 +8,8 @@ from rest_framework.response import Response
 
 from mocrat_user.models import User
 from mocrat_config.environ_config import env
+from mocrat_config.admin_utils import error_notify
+
 
 logger = logging.getLogger(__name__)
 

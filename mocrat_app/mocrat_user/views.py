@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 from .models import User
 from .serializer import UserSerializer
 
+from mocrat_config.admin_utils import error_notify
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

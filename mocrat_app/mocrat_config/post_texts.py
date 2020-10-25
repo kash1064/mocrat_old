@@ -1,7 +1,7 @@
 import sys
 import os
 
-from utils import datetime_functions
+from utils.admin_utils import datetime_functions
 
 next_day = datetime_functions.get_next_day_strings()
 

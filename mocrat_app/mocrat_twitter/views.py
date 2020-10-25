@@ -9,10 +9,10 @@ from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from mocrat_config.admin_utils import error_notify
 from mocrat_user.models import User
 from allauth.socialaccount.models import SocialLogin, SocialToken, SocialApp, SocialAccount
 
-from utils import error_notify
 from .twitter_func import *
 
 logger = logging.getLogger(__name__)
