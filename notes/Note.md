@@ -50,7 +50,7 @@
 ## setup
 ### .envファイル
 - mocrat_config 配下に .env ファイルを作成
-
+  
 ```
 AUTH_USER_MODEL=mocrat_user.User
 BASE_URL=https://chiba-moku2.herokuapp.com/
@@ -81,4 +81,11 @@ TWITTER_POST_API=mocrat_twitter/api/v1/post_text/
 TWITTER_SERCH_QUERY_API=mocrat_twitter/api/v1/search_query_tweets/
 
 HATEBU_IT_TOP_XML_RSS=https://b.hatena.ne.jp/hotentry/it.rss
+```
+
+- ルートディレクトリに .env ファイルを作成
+```
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
 ```

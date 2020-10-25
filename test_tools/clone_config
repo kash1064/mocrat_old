@@ -5,7 +5,7 @@
 30 8 * * * curl -X GET http://localhost:8000/mocrat_utils/api/v1/asakatsu_closing/ > /dev/null 2>&1
 
 # 毎日 22:30 に振り返り通知
-30 22 * * * curl -X POST -H "Content-Type: application/json" -d '{"text":"本日もお疲れ様でした！\n振り返りの時間です！", "discord_webhook_url":"" > /dev/null 2>&1
+30 22 * * * curl -X POST -H "Content-Type: application/json" -d '{"text":"本日もお疲れ様でした！\n振り返りの時間です！", "discord_webhook_url":""}' http://localhost:8000/mocrat_discord/api/v1/post_text/ > /dev/null 2>&1
 
 # 定期的に通知を送信
 curl -X POST -H "Content-Type: application/json" -d '{"text":"定期タスクです！", "discord_webhook_url":""}' http://localhost:8000/mocrat_discord/api/v1/post_text/ > /dev/null 2>&1
