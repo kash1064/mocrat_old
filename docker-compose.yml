@@ -11,17 +11,24 @@ services:
       - "8000:8000"
     tty: true
     stdin_open: true
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 0.0.0.0:8000
     depends_on:
         - mocrat_db
     
   mocrat_db:
-    image: postgres
+    build:
+      context: ./mocrat_db
+      dockerfile: Dockerfile
+    container_name: mocrat_db
+    ports: 
+      - "5432:5432"
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./mocrat_db/data:/var/lib/postgresql/data
+
   discord_app:
     build:
       context: ./discord_app
