@@ -16,6 +16,8 @@ build_mocrat:
 # mocrat_app
 rc :=
 run_mocrat_app := docker-compose run mocrat_app
+exec_mocrat_app := docker-compose run mocrat_app
+
 login_mocrat_app:
 	${run_mocrat_app} bash
 	
@@ -33,11 +35,12 @@ migrate:
 	${run_mocrat_app} python3 manage.py migrate
 
 # mocrat_utils
+# TODO: なんでexecじゃないとrequests通らないん？？runだと新規でコンテナ立てるから？
 asakatsu_scheduler:
-	${run_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_scheduler()'"
+	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_scheduler()'"
 
 asakatsu_closer:
-	${run_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()"
+	${exec_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()"
 
 username=admin
 email=sample@testmail.org

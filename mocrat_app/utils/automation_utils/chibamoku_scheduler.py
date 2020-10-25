@@ -23,8 +23,8 @@ def asakatsu_scheduler():
 
     discord_post_url = env("DISCORD_POST_API")
     discord_payload = {
-        # "discord_webhook_url": mocrat_asakatsu_webhook_url,
-        "discord_webhook_url": mocrat_notice_webhook_url,
+        "discord_webhook_url": mocrat_asakatsu_webhook_url,
+        # "discord_webhook_url": mocrat_notice_webhook_url,
         "text": asakatsu_booking
     }
     try:
@@ -53,8 +53,8 @@ def asakatsu_closer():
 
     discord_post_url = env("DISCORD_POST_API")
     discord_payload = {
-        # "discord_webhook_url": mocrat_asakatsu_webhook_url,
-        "discord_webhook_url": mocrat_notice_webhook_url,
+        "discord_webhook_url": mocrat_asakatsu_webhook_url,
+        # "discord_webhook_url": mocrat_notice_webhook_url,
         "text": asakatsu_closing
     }
 
