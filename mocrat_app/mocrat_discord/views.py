@@ -11,7 +11,6 @@ from mocrat_config.environ_config import env
 
 logger = logging.getLogger(__name__)
 
-#TODO ユーザ認証が必要＆内部呼び出しのみ実行可能にしたい
 class PostText(APIView):
     def post(self, request):
         logger.info("Called mocrat_discord PostText")

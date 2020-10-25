@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
-    'mocrat_main',
     'mocrat_user',
     'mocrat_twitter',
     'mocrat_discord',

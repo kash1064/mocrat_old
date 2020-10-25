@@ -1,7 +1,37 @@
+## mocrat_app
+### mocrat_config
+- Djangoの設定ファイル
 
+- 環境変数の設定
+    - .env
+    - environ_config.py
+  
+- Celeryの設定
+  - celery.py
 
+- テキストデータ
+  - post_texts.py
 
+### mocrat_user
+#### モデル
+- カスタムユーザモデル
 
+#### ビュー
+
+### mocrat_discord(/mocrat_discord/api/v1/)
+#### モデル
+
+#### ビュー
+- Discord WebhookのAPI呼び出し
+  - PostText(post_text/)
+    - requires(POST data)
+      - discord_webhook_url
+      - text
+
+### mocrat_twitter
+#### モデル
+
+#### ビュー
 
 ## setup
 ### .envファイル
