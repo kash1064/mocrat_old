@@ -7,4 +7,4 @@ mocrat_db/data/
 *.log
 *history*
 *.local*
-*migrations*
+*migrations
