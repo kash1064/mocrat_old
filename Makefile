@@ -48,7 +48,7 @@ asakatsu_closer:
 
 # twitter_utils
 twitter_auth_userid := chiba_moku2
-twitter_post := このツイートはTwitter APIから送信されています！
+twitter_post := Hello！
 call_twitter_post_util:
 	${exec_mocrat_app} python3 -c "from utils.twitter_utils import twitter_requests_utils; twitter_requests_utils.call_twitter_post('${twitter_auth_userid}', '${twitter_post}')"
 
