@@ -39,12 +39,25 @@ migrate:
 
 # mocrat_utils
 # TODO: なんでexecじゃないとrequests通らないん？？runだと新規でコンテナ立てるから？
+# automation_utils
 asakatsu_scheduler:
 	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_scheduler()'"
 
 asakatsu_closer:
 	${exec_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()"
 
+# twitter_utils
+twitter_auth_userid := chiba_moku2
+twitter_post := このツイートはTwitter APIから送信されています！
+call_twitter_post_util:
+	${exec_mocrat_app} python3 -c "from utils.twitter_utils import twitter_requests_utils; twitter_requests_utils.call_twitter_post('${twitter_auth_userid}', '${twitter_post}')"
+
+auto_fav_word := 駆け出しエンジニア
+auto_fav_count := 10
+call_auto_fav_by_query:
+	${exec_mocrat_app} python3 -c "from utils.twitter_utils import twitter_requests_utils; twitter_requests_utils.call_auto_fav_by_query('${twitter_auth_userid}', '${auto_fav_word}', ${auto_fav_count})"
+
+# custom command
 username=admin
 email=sample@testmail.org
 passwd=Passw0rd

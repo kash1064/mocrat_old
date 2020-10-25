@@ -1,21 +1,17 @@
 import logging
+import os
 import requests
+import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+
+from mocrat_config.admin_utils import error_notify
 from mocrat_config.environ_config import env
 from mocrat_config.post_texts import *
 
 logger = logging.getLogger(__name__)
 
 base_url = env("BASE_URL")
-token = env('ADMIN_TOKEN')
-
-class UserRequests(object):
-    pass
-
-
-class MainRequests(object):
-    pass
-
 
 class TwitterRequests(object):
     def __init__(self, twitter_user):
@@ -32,11 +28,9 @@ class TwitterRequests(object):
             "query": query,
             "count": count
         }
-        search_results = requests.get(base_url + twitter_search_query_url,
-                                      params=twitter_payload, headers={"Authorization": "JWT " + token})
+        search_results = requests.get(base_url + twitter_search_query_url, params=twitter_payload)
         search_results = search_results.json()
         return search_results
-
 
     #actions
     def twitter_post(self, text):
@@ -49,7 +43,7 @@ class TwitterRequests(object):
             "twitter_user": self.twitter_user,
             "text": text,
         }
-        results = requests.post(base_url + twitter_post_url, data=twitter_payload, headers = {"Authorization": "JWT " + token})
+        results = requests.post(base_url + twitter_post_url, data=twitter_payload)
         return results
     
 
@@ -60,30 +54,45 @@ class TwitterRequests(object):
             "twitter_user": self.twitter_user,
             "tweet_ids": tweet_ids,
         }
-        results = requests.post(base_url + twitter_create_fav_url, data=twitter_payload, headers = {"Authorization": "JWT " + token})
+        results = requests.post(base_url + twitter_create_fav_url, data=twitter_payload)
         return results
+
+def call_twitter_post(twitter_user, text):
+    logger.info("Called twitter_requests_utils call_twitter_post")
+
+    twitter_requests = TwitterRequests(twitter_user)
+    results = twitter_requests.twitter_post(text)
+
+    return results
+
+
+def call_get_tweet(twitter_user, query, count=10):
+    logger.info("Called twitter_requests_utils call_get_tweet")
+
+    twitter_requests = TwitterRequests(twitter_user)
+    results = twitter_requests.get_tweet(query, count)
+    """
+    result format
+    [{'id': 1312276091659317248, 'text': 'this is text'},]
+    """
+    return results
+
+
+def call_auto_fav_by_query(twitter_user, query, count=10):
+    logger.info("Called twitter_requests_utils call_auto_fav")
+
+    tweets_arr = call_get_tweet(twitter_user, query, count)
+
+    twitter_requests = TwitterRequests(twitter_user)
+    tweet_ids = []
+    for tweet in tweets_arr:
+        if tweet["text"][0] == "@":
+            continue
+        tweet_ids.append(tweet["id"])
+    
+    results = twitter_requests.twiter_fav(tweet_ids)
+    return results
         
-
-
-class DiscordRequests(object):
-    def __init__(self):
-        mocrat_notice_webhook_url = env("MOCRAT_NOTICE_WEBHOOK")
-        mocrat_asakatsu_webhook_url = env("MOCRAT_ASAKATSU_WEBHOOK")
-        discord_post_url = env("DISCORD_POST_API")
-
-
-class TodoistRequests(object):
-    pass
-
-
-class GoogleRequests(object):
-    pass
-
-
-class RssRequests(object):
-    pass
-
-
 
 if __name__ == "__main__":
     pass
