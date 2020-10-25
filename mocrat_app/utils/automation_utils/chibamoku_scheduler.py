@@ -27,6 +27,7 @@ def asakatsu_scheduler():
         # "discord_webhook_url": mocrat_notice_webhook_url,
         "text": asakatsu_booking
     }
+    
     try:
         requests.post(base_url + discord_post_url, json=discord_payload)
 
