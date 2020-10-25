@@ -69,6 +69,9 @@ pull:
 force_pull:
 	git fetch ${branch}
 	git reset --hard origin/master
+
+clear-gitcache:
+	git rm -r --cached .
 	
 u := 
 p :=
