@@ -19,6 +19,9 @@
 #### ビュー
 
 ### mocrat_discord(/mocrat_discord/api/v1/)
+> Discord Webhook を利用するAPI
+> Discord bot は discord_app を参照
+
 #### モデル
 
 #### ビュー
@@ -29,9 +32,15 @@
       - text
 
 ### mocrat_twitter
+> Twitter APIを利用するAPI
+
 #### モデル
 
 #### ビュー
+
+### utils
+> mocrat の各機能を利用するツール群
+> API経由での呼び出し不可
 
 ## setup
 ### .envファイル
