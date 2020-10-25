@@ -16,7 +16,7 @@ build_mocrat:
 # mocrat_app
 rc :=
 run_mocrat_app := docker-compose run mocrat_app
-exec_mocrat_app := docker-compose run mocrat_app
+exec_mocrat_app := docker-compose exec mocrat_app
 
 login_mocrat_app:
 	${run_mocrat_app} bash

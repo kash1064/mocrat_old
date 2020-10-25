@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^admin/', admin.site.urls),
     # url(r'^mocrat_main/api/v1/', include('mocrat_main.urls')),
-    url(r'^mocrat_utils/api/v1/', include('mocrat_utils.urls')),
     url(r'^mocrat_discord/api/v1/', include('mocrat_discord.urls')),
     url(r'^mocrat_twitter/api/v1/', include('mocrat_twitter.urls')),
     url(r'^mocrat_user/api/v1/', include(user_router.urls)),

@@ -31,8 +31,8 @@ def asakatsu_scheduler():
         requests.post(base_url + discord_post_url, json=discord_payload)
 
     except Exception as e:
-        print(e)
         logger.error("Faild asakatsu_scheduler request")
+        error_notify.error_notifier(e)
 
     #Twitter API 呼び出し
     # twitter_post_url = env("TWITTER_POST_API")
