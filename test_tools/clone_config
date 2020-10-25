@@ -10,5 +10,5 @@
 # 定期的に通知を送信
 curl -X POST -H "Content-Type: application/json" -d '{"text":"定期タスクです！", "discord_webhook_url":""}' http://localhost:8000/mocrat_discord/api/v1/post_text/ > /dev/null 2>&1
 
-# Auto fav
-python3 -c "from utils import mocrat_requests_utils; mocrat_requests_utils.call_auto_fav_by_query('yuki_kashiwaba', 'プログラミング', 20)"  > /dev/null 2>&1
+# いいね自動化
+30 18 * * * sh -c "cd ~/mocrat && make call_auto_fav_by_query twitter_auth_userid= auto_fav_word= auto_fav_count=20" > /dev/null 2>&1
