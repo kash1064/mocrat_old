@@ -22,13 +22,13 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     
-  # discord_app:
-  #   build:
-  #     context: ./discord_app
-  #     dockerfile: Dockerfile
-  #   container_name: discord_app
-  #   volumes:
-  #     - ./discord_app:/usr/app
-  #   tty: true
-  #   stdin_open: true
-  #   command: python src/discord_bot.py
+  discord_app:
+    build:
+      context: ./discord_app
+      dockerfile: Dockerfile
+    container_name: discord_app
+    volumes:
+      - ./discord_app:/usr/app
+    tty: true
+    stdin_open: true
+    command: python src/discord_bot.py

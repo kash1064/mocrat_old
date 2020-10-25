@@ -3,9 +3,9 @@ start_docker:
 	sudo /etc/init.d/docker start
 
 docker_exec := docker exec -it
-container := discord_app
+con := mocrat_main
 login_container:
-	${docker_exec} ${container} /bin/bash
+	${docker_exec} ${con} /bin/bash
 
 up_mocrat:
 	docker-compose up
@@ -31,6 +31,13 @@ makemigrations:
 
 migrate:
 	${run_mocrat_app} python3 manage.py migrate
+
+# mocrat_utils
+asakatsu_scheduler:
+	${run_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_scheduler()'"
+
+asakatsu_closer:
+	${run_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()"
 
 username=admin
 email=sample@testmail.org
