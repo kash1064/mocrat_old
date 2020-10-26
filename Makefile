@@ -19,7 +19,7 @@ down_docker_compose:
 # mocrat_app
 rc :=
 run_mocrat_app := docker-compose run mocrat_app
-exec_mocrat_app := docker-compose exec mocrat_app
+exec_mocrat_app := docker container exec mocrat_app
 
 login_mocrat_app:
 	${exec_mocrat_app} bash
