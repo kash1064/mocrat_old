@@ -4,7 +4,7 @@ services:
     build:
       context: ./mocrat_app
       dockerfile: Dockerfile
-    container_name: mocrat_main
+    container_name: mocrat_app
     volumes:
       - ./mocrat_app:/usr/mocrat/app
     ports:
