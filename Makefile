@@ -44,10 +44,10 @@ asakatsu_scheduler:
 	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_scheduler()'"
 
 asakatsu_closer:
-	${exec_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()"
+	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.asakatsu_closer()'"
 
 furikaeri_reminder:
-	${exec_mocrat_app} python3 -c "from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.furikaeri_reminder()"
+	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.furikaeri_reminder()'"
 
 # twitter_utils
 twitter_auth_userid := chiba_moku2
