@@ -24,7 +24,6 @@ def asakatsu_scheduler():
     discord_post_url = env("DISCORD_POST_API")
     discord_payload = {
         "discord_webhook_url": mocrat_asakatsu_webhook_url,
-        # "discord_webhook_url": mocrat_notice_webhook_url,
         "text": asakatsu_booking
     }
     
@@ -55,7 +54,6 @@ def asakatsu_closer():
     discord_post_url = env("DISCORD_POST_API")
     discord_payload = {
         "discord_webhook_url": mocrat_asakatsu_webhook_url,
-        # "discord_webhook_url": mocrat_notice_webhook_url,
         "text": asakatsu_closing
     }
 
@@ -72,9 +70,24 @@ def furikaeri_reminder():
 
     discord_post_url = env("DISCORD_POST_API")
     discord_payload = {
-        "discord_webhook_url": mocrat_notice_webhook_url,
-        # "discord_webhook_url": mocrat_notice_webhook_url,
+        "discord_webhook_url": mocrat_furikaeri_webhook_url,
         "text": furikaeri_notice
+    }
+
+    requests.post(base_url + discord_post_url, json=discord_payload)
+
+    return
+
+def discord_heartbeat():
+    logger.info("Called utils furikaeri_reminder")
+
+    #Discord API 呼び出し
+    mocrat_notice_webhook_url = env("MOCRAT_NOTICE_WEBHOOK")
+
+    discord_post_url = env("DISCORD_POST_API")
+    discord_payload = {
+        "discord_webhook_url": mocrat_notice_webhook_url,
+        "text": heartbeat
     }
 
     requests.post(base_url + discord_post_url, json=discord_payload)

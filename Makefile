@@ -49,6 +49,9 @@ asakatsu_closer:
 furikaeri_reminder:
 	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.furikaeri_reminder()'"
 
+discord_heartbeat:
+	${exec_mocrat_app} sh -c "python3 -c 'from utils.automation_utils import chibamoku_scheduler; chibamoku_scheduler.discord_heartbeat()'"
+
 # twitter_utils
 twitter_auth_userid := chiba_moku2
 twitter_post := Hello！

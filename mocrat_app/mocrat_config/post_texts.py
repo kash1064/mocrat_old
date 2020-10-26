@@ -37,6 +37,11 @@ furikaeri_notice = \
 振り返りの時間です！
 """
 
+heartbeat = \
+"""
+定期タスクです！
+"""
+
 error_notice = \
 """@here
 mocratに何らかのエラーが発生したようです！
