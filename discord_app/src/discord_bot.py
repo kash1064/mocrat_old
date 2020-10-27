@@ -3,6 +3,7 @@ import discord
 from config.common_logger import *
 from config.environ_config import env
 
+from discord_actions import *
 from hatena import hatebu_utils
 from a3rt import talk_api
 
@@ -25,16 +26,15 @@ async def on_message(message):
         app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {}".format(message.channel.name, message.author.display_name, message.author.id))
         
         if message.mentions[0].display_name == "mocrat":
-
-            if message.content.split(" ")[1] == "hatebu":
-                items = hatebu_utils.return_tophatebu_itposts()
-                for item in items:
-                    await message.channel.send(item[0] + ": " + item[1])
+            if message.channel.name == "朝活もくもく会":
+                pass
 
             else:
-                query = message.content.split(" ")[1]
-                reply = talk_api.call_talk_api(query)
-                await message.channel.send(reply)
+                mocrat_actions = GenericRoomAction(message)
+                post_item_arr = mocrat_actions.return_post_items()
+
+            for post in post_item_arr:
+                await message.channel.send(post)
 
     except:
         pass

@@ -5,6 +5,8 @@ from config.environ_config import env
 
 # TODO: ログを追加する
 def call_talk_api(query):
+    app_logger.info("Call call_talk_api")
+
     talk_api_url = env("TALK_API_URL")
     payload = {
         "apikey": env("TALK_API_KEY"),
