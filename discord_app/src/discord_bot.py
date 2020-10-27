@@ -22,6 +22,8 @@ async def on_message(message):
     
     # TODO: ちゃんとキレイにする
     try:
+        app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {}".format(message.channel.name, message.author.display_name, message.author.id))
+        
         if message.mentions[0].display_name == "mocrat":
 
             if message.content.split(" ")[1] == "hatebu":
