@@ -1,8 +1,8 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
 
-# 毎日 07:15 に朝活通知を送信
-15 7 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_scheduler" > /var/ubuntu/log/mocrat_cron.log 2>&1
+# 毎日 18:00 に朝活通知を送信
+00 18 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_scheduler" > /var/ubuntu/log/mocrat_cron.log 2>&1
 
 # 毎日 08:30 に朝活通知を送信
 30 8 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_closer" > /var/ubuntu/log/mocrat_cron.log 2>&1
