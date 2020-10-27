@@ -26,10 +26,7 @@ async def on_message(message):
         app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {}".format(message.channel.name, message.author.display_name, message.author.id))
         
         if message.mentions[0].display_name == "mocrat":
-            if message.channel.name == "朝活もくもく会":
-                pass
-
-            elif message.channel.name == "もくもく会":
+            if message.channel.name == "朝活もくもく会" or message.channel.name == "もくもく会":
                 pass
 
             elif message.channel.name == "振り返り部屋":
