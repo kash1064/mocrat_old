@@ -29,6 +29,15 @@ async def on_message(message):
             if message.channel.name == "朝活もくもく会":
                 pass
 
+            elif message.channel.name == "もくもく会":
+                pass
+
+            elif message.channel.name == "振り返り部屋":
+                pass
+            
+            elif message.channel.name == "資格勉強の部屋":
+                pass
+
             else:
                 mocrat_actions = GenericRoomAction(message)
                 post_item_arr = mocrat_actions.return_post_items()
