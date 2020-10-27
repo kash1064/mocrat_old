@@ -83,6 +83,9 @@ attach_db:
 clean_database:
 	${run_mocrat_app} sh -c "sleep 1 && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'drop database ${PGDATABASE};' && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'create database ${PGDATABASE};'"
 
+clone_db_volume:
+	sudo cp -r mocrat_db/data/ mocrat_db/data_buckup
+
 # 環境
 chown_user:
 	sudo chown -R ubuntu:ubuntu .
