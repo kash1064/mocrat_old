@@ -26,8 +26,13 @@ async def on_message(message):
         app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {}".format(message.channel.name, message.author.display_name, message.author.id))
         
         if message.mentions[0].display_name == "mocrat":
-            if message.channel.name == "朝活もくもく会" or message.channel.name == "もくもく会":
-                pass
+            if message.channel.name == "朝活もくもく会":
+                mocrat_actions = Asakatsu2RoomAction(message)
+                post_item_arr = mocrat_actions.return_post_items()
+
+            elif  message.channel.name == "もくもく会":
+                mocrat_actions = Moku2RoomAction(message)
+                post_item_arr = mocrat_actions.return_moku2_post_items()
 
             elif message.channel.name == "振り返り部屋":
                 pass
@@ -37,7 +42,7 @@ async def on_message(message):
 
             else:
                 mocrat_actions = GenericRoomAction(message)
-                post_item_arr = mocrat_actions.return_post_items()
+                post_item_arr = mocrat_actions.return_generic_post_items()
 
             for post in post_item_arr:
                 await message.channel.send(post)

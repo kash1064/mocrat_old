@@ -2,6 +2,7 @@ import requests
 
 import feedparser
 
+from config.common_logger import *
 from config.environ_config import env
 
 hatebu_it_top_xml_rss = env("HATEBU_IT_TOP_XML_RSS")
