@@ -32,7 +32,7 @@ def asakatsu_scheduler():
 
     except Exception as e:
         logger.error("Faild asakatsu_scheduler request")
-        error_notify.error_notifier(e)
+        error_notify.error_notifier(sys.exc_info()[0], e)
 
     #Twitter API 呼び出し
     # twitter_post_url = env("TWITTER_POST_API")
