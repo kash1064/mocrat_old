@@ -57,7 +57,6 @@ class CreateFav(APIView):
             #TODO：タイムアウト問題
             #TODO：リプライにふぁぼしない
             for tweet_id in request.POST.getlist("tweet_ids"):
-                #Heroku の仕様で30秒以上でワーカーがタイムアウトする
                 try:
                     create_fav(self.tweepy_api, int(tweet_id))
                     time.sleep(1)
