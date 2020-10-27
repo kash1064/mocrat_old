@@ -1,4 +1,4 @@
-# Mocrat
+# MocRat
 
 ## アーキテクチャ
 
