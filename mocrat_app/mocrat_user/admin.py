@@ -20,5 +20,6 @@ class AdminUserAdmin(UserAdmin):
 
 class ChibaMokuUserAdmin(admin.ModelAdmin):
     fields = ['discord_id', 'display_name', 'level', 'total_exp', 'created_at', 'updated_at']
+    readonly_fields = ['created_at', 'updated_at']
 
 admin.site.register(ChibaMokuUser, ChibaMokuUserAdmin)
