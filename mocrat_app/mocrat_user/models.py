@@ -111,8 +111,11 @@ class ChibaMokuUser(models.Model):
         db_table = "chibamoku_user"
         ordering = ["created_at"]
     
-    discord_id = models.UUIDField(primary_key=True, editable=False)
+    discord_id = models.UUIDField(primary_key=True, editable=True)
     display_name = models.CharField(verbose_name="DiscordName", max_length=100)
+
+    level = models.IntegerField(null=False, blank=False, default=1)
+    total_exp = models.BigIntegerField(null=False, blank=False, default=0)
 
     created_at = models.DateTimeField(default=timezone.now)
 
