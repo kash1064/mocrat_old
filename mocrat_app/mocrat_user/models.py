@@ -118,24 +118,21 @@ class ChibaMokuUser(models.Model):
     total_exp = models.BigIntegerField(null=False, blank=False, default=0)
 
     created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.display_name
     
-# class ChibaMokuActivity(models.Model):
-#     class Meta:
-#         db_table = "chibamoku_activity"
-#         ordering = ["created_at"]
+class ChibaMokuActivityLog(models.Model):
+    class Meta:
+        db_table = "chibamoku_activity"
+        ordering = ["created_at"]
     
-#     discord_id = models.BigIntegerField(primary_key=True, editable=True)
-#     display_name = models.CharField(verbose_name="DiscordName", max_length=100)
+    chibamoku_activity = models.ForeignKey(ChibaMokuUser, on_delete=models.CASCADE)
+    category = models.CharField(verbose_name="ActivityCategory", max_length=150, default="")
 
-#     level = models.IntegerField(null=False, blank=False, default=1)
-#     total_exp = models.BigIntegerField(null=False, blank=False, default=0)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
-#     created_at = models.DateTimeField(default=timezone.now)
-#     updated_at = models.DateTimeField(default=timezone.now, auto_now=True)
-
-#     def __str__(self):
-        # return self.display_name
+    def __str__(self):
+        return self.category
