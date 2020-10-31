@@ -20,6 +20,6 @@ POST http://localhost:8000/mocrat_user/api/v1/chibamoku-user/ HTTP/1.1
 content-type: application/json
 
 {
-    "discord_id" : 9999,
+    "discord_id" : 724538919450050651,
     "display_name" : "sample"
 }

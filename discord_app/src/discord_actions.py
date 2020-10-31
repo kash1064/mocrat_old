@@ -29,18 +29,18 @@ class GenericRoomAction(object):
 
     def create_chibamoku_user(self):
         app_logger.info("CALL : create_chibamoku_user()")
-        base_url = env("BASE_URL")
-        # chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API")
+        base_url = env("MOCRAT_APP_URL")
+        chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API")
 
-        # print(chibamoku_user_api)
-        # print(requests.get(chibamoku_user_api))
+        chibamoku_user_data = {
+            "discord_id" : self.message.author.id,
+            "display_name" : self.message.author.display_name
+        }
 
-        chibamoku_user_api = env("MOCRAT_APP_URL") + env("CHIBAMOKU_USER_API")
-
-        print(chibamoku_user_api)
-        print(requests.get(chibamoku_user_api))
-
-        return ["hello"]
+        response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
+        print(response)
+        res = ["hello"]
+        return res
     
     def talk_reply(self):
         app_logger.info("CALL : talk_reply()")
