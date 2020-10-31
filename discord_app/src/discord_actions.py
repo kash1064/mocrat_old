@@ -1,3 +1,4 @@
+import ast
 import discord
 import requests
 
@@ -37,10 +38,23 @@ class GenericRoomAction(object):
             "display_name" : self.message.author.display_name
         }
 
-        response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
-        print(response)
-        res = ["hello"]
-        return res
+        try:
+            response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
+
+            if response.status_code == 201:
+                self.post_items_arr = "ちばもく会へようこそ！\n新規ユーザー登録が完了しました！"
+
+            else:
+                """
+                > response.text
+                '{"discord_id":["この discord id を持った chiba moku user が既に存在します。"]}'
+                """
+                self.post_items_arr = ast.literal_eval(response.text)["discord_id"]
+        except:
+            #TODO: discord 側にも、エラーをDiscord通知する機能を実装する
+            app_logger.info("ERROR : chibamoku user create")
+
+        return
     
     def talk_reply(self):
         app_logger.info("CALL : talk_reply()")
