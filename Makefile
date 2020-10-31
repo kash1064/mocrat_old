@@ -16,26 +16,32 @@ build_mocrat:
 down_docker_compose:
 	docker-compose down
 
-# mocrat_app
+# mocrat
 rc :=
-run_mocrat_app := docker-compose run mocrat_app
+compose_exec := docker-compose exec 
 exec_mocrat_app := docker container exec mocrat_app
 
-login_mocrat_app:
-	${exec_mocrat_app} bash
+# mocrat_app
+container_name := mocrat_app
+login_mocrat:
+	${compose_exec} ${container_name} bash
 	
 run_django_manage:
-	${exec_mocrat_app} python3 manage.py ${rc}
+	${compose_exec}${container_name}  python3 manage.py ${rc}
 
 pipinstall_requirements:
-	${exec_mocrat_app} pip install --upgrade -r requirements.txt
+	${compose_exec} ${container_name} pip install --upgrade -r requirements.txt
 
 makemigrations:
-	${exec_mocrat_app} python3 manage.py makemigrations
-	${exec_mocrat_app} python3 manage.py makemigrations mocrat_user
+	${compose_exec} ${container_name} python3 manage.py makemigrations
+	${compose_exec} ${container_name} python3 manage.py makemigrations mocrat_user
 
 migrate:
-	${exec_mocrat_app} python3 manage.py migrate
+	${compose_exec} ${container_name} python3 manage.py migrate
+
+# mocrat_db
+login_mocrat_db:
+	make login_mocrat container_name=mocrat_db
 
 # mocrat_utils
 # TODO: なんでexecじゃないとrequests通らないん？？runだと新規でコンテナ立てるから？

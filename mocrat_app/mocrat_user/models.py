@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 from django.contrib.auth.base_user import BaseUserManager
+
 import uuid as uuid_lib
 
 class UserManager(BaseUserManager):
@@ -102,3 +103,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+# Django 側の User とは分離して管理したい
+class ChibaMokuUser(models.Model):
+    class Meta:
+        db_table = "chibamoku_user"
+        ordering = ["created_at"]
+    
+    discord_id = models.UUIDField(primary_key=True, editable=False)
+    display_name = models.CharField(verbose_name="DiscordName", max_length=100)
+
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+    
