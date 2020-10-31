@@ -42,7 +42,7 @@ class GenericRoomAction(object):
             response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
 
             if response.status_code == 201:
-                self.post_items_arr = "ちばもく会へようこそ！\n新規ユーザー登録が完了しました！"
+                self.post_items_arr = ["ちばもく会へようこそ！\n新規ユーザー登録が完了しました！"]
 
             else:
                 """
