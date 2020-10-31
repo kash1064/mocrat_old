@@ -23,7 +23,7 @@ async def on_message(message):
     
     # TODO: ちゃんとキレイにする
     try:
-        app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {}".format(message.channel.name, message.author.display_name, message.author.id))
+        app_logger.debug("Talk from {} : / Talk User : {} / Talk User Id : {} / Message : {}".format(message.channel.name, message.author.display_name, message.author.id, message.content.split(" ")[1]))
         
         if message.mentions[0].display_name == "mocrat":
             if message.channel.name == "朝活もくもく会":
@@ -35,10 +35,12 @@ async def on_message(message):
                 post_item_arr = mocrat_actions.return_moku2_post_items()
 
             elif message.channel.name == "振り返り部屋":
-                pass
+                mocrat_actions = GenericRoomAction(message)
+                post_item_arr = mocrat_actions.return_generic_post_items()
             
             elif message.channel.name == "資格勉強の部屋":
-                pass
+                mocrat_actions = GenericRoomAction(message)
+                post_item_arr = mocrat_actions.return_generic_post_items()
 
             else:
                 mocrat_actions = GenericRoomAction(message)

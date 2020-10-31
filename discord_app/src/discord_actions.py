@@ -20,6 +20,9 @@ class GenericRoomAction(object):
         if self.message_first_query == "登録":
             self.create_chibamoku_user()
 
+        elif self.message_first_query == "ステータス":
+            self.check_status()
+
         elif self.message_first_query == "hatebu":
             self.hatebu()
         
@@ -39,6 +42,7 @@ class GenericRoomAction(object):
         }
 
         try:
+            app_logger.info("POST : {}".format(chibamoku_user_api))
             response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
 
             if response.status_code == 201:
@@ -50,9 +54,43 @@ class GenericRoomAction(object):
                 '{"discord_id":["この discord id を持った chiba moku user が既に存在します。"]}'
                 """
                 self.post_items_arr = ast.literal_eval(response.text)["discord_id"]
-        except:
+        
+        except Exception as e:
             #TODO: discord 側にも、エラーをDiscord通知する機能を実装する
-            app_logger.info("ERROR : chibamoku user create")
+            # error_notify.error_notifier(sys.exc_info()[0], e.args)
+            logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
+
+        return
+
+    def check_status(self):
+        app_logger.info("CALL : check_status()")
+        base_url = env("MOCRAT_APP_URL")
+        user_id = self.message.author.id
+        chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API") + str(user_id) + "/"
+
+        try:
+            app_logger.info("GET : {}".format(chibamoku_user_api))
+            response = requests.get(chibamoku_user_api)
+
+            if response.status_code == 200:
+                status_data = ast.literal_eval(response.text)
+                user_name = status_data["display_name"]
+                level = status_data["level"]
+                total_exp = status_data["total_exp"]
+
+                self.post_items_arr = [
+                    self.message.author.mention + " さんのステータスを表示します。" + "\n" \
+                    + "現在のレベル ： " + str(level) + "\n" \
+                    + "総獲得経験値 : " + str(total_exp) + "\n" \
+                    + "この調子で頑張りましょう！"
+                ]
+
+            else:
+                self.post_items_arr = ast.literal_eval(response.text)
+
+        except Exception as e:
+            # error_notify.error_notifier(sys.exc_info()[0], e.args)
+            logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
 
         return
     
