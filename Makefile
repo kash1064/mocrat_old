@@ -42,7 +42,7 @@ migrate:
 # mocrat_db
 login_mocrat_db:
 	make login_mocrat container_name=mocrat_db
-
+	
 # mocrat_utils
 # TODO: なんでexecじゃないとrequests通らないん？？runだと新規でコンテナ立てるから？
 # automation_utils

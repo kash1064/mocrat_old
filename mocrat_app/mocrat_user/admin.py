@@ -1,4 +1,4 @@
-from .models import User
+from .models import User, ChibaMokuUser
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 from django.utils.translation import gettext, gettext_lazy as _
@@ -17,3 +17,8 @@ class AdminUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'is_staff')
     search_fields = ('username', 'email')
     filter_horizontal = ('groups', 'user_permissions')
+
+class ChibaMokuUserAdmin(admin.ModelAdmin):
+    fields = ['discord_id', 'display_name', 'created_at']
+
+admin.site.register(ChibaMokuUser, ChibaMokuUserAdmin)
