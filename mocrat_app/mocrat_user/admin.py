@@ -19,6 +19,6 @@ class AdminUserAdmin(UserAdmin):
     filter_horizontal = ('groups', 'user_permissions')
 
 class ChibaMokuUserAdmin(admin.ModelAdmin):
-    fields = ['discord_id', 'display_name', 'level', 'total_exp', 'created_at']
+    fields = ['discord_id', 'display_name', 'level', 'total_exp', 'created_at', 'updated_at']
 
 admin.site.register(ChibaMokuUser, ChibaMokuUserAdmin)

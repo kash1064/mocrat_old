@@ -2,5 +2,5 @@
 
 ## アーキテクチャ
 
-![アーキテクチャ図](notes/images/20201025_mocrat.png "アーキテクチャ図") 
+![アーキテクチャ図](notes/images/mocrat.png "アーキテクチャ図") 
 
