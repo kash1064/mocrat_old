@@ -90,8 +90,12 @@ PGDATABASE :=
 attach_db:
 	${run_mocrat_app} psql -h  -p 5433 -U postgres -W postgres test_db
 	
-clean_database:
+clear_database:
 	${run_mocrat_app} sh -c "sleep 1 && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'drop database ${PGDATABASE};' && PGPASSWORD=${PGPASSWORD} psql -U ${PGUSER} -h ${PGHOST} -p ${PGPORT} -c 'create database ${PGDATABASE};'"
+
+delete_all_db_and_migrations:
+	sudo rm -rf mocrat_db/data/
+	sudo rm -rf mocrat_app/*/migrations/
 
 clone_db_volume:
 	sudo cp -r mocrat_db/data/ mocrat_db/data_buckup
