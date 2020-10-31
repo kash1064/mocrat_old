@@ -74,7 +74,7 @@ username=admin
 email=sample@testmail.org
 passwd=Passw0rd
 create_custom_superuser: ## This is create super user for 1line, need name,email,passwd(default=admin,sample@testmail.org,Passw0rd)
-	${run_mocrat_app} python3 ./manage.py custom_create_superuser --username ${username} --email ${email} --password ${passwd}
+	${exec_mocrat_app} python3 ./manage.py custom_create_superuser --username ${username} --email ${email} --password ${passwd}
 
 # mocrat_db
 PGPASSWORD :=

@@ -1,9 +1,25 @@
 # require REST Client
 
+# 
 POST http://localhost:8000/mocrat_discord/api/v1/post_text/ HTTP/1.1
 content-type: application/json
 
 {
     "discord_webhook_url": "",
     "text": "This is test."
+}
+
+###
+# chibamoku user get
+GET http://localhost:8000/mocrat_user/api/v1/chibamoku-user/ HTTP/1.1
+content-type: application/json
+
+###
+# chibamoku user create
+POST http://localhost:8000/mocrat_user/api/v1/chibamoku-user/ HTTP/1.1
+content-type: application/json
+
+{
+    "discord_id" : 9999,
+    "display_name" : "sample"
 }

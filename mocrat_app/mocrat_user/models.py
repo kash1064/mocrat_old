@@ -111,7 +111,7 @@ class ChibaMokuUser(models.Model):
         db_table = "chibamoku_user"
         ordering = ["created_at"]
     
-    discord_id = models.UUIDField(primary_key=True, editable=True)
+    discord_id = models.IntegerField(primary_key=True, editable=True)
     display_name = models.CharField(verbose_name="DiscordName", max_length=100)
 
     level = models.IntegerField(null=False, blank=False, default=1)
@@ -121,5 +121,5 @@ class ChibaMokuUser(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.title
+        return self.display_name
     
