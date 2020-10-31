@@ -1,10 +1,11 @@
 version: "3"
 services:
-  mocrat_app:
+  mocrat-app:
     build:
       context: ./mocrat_app
       dockerfile: Dockerfile
-    container_name: mocrat_app
+    # Django の Header Error 回避のためアンダーバー使用禁止
+    container_name: mocrat-app
     volumes:
       - ./mocrat_app:/usr/mocrat/app
     ports:
@@ -29,13 +30,13 @@ services:
     volumes:
       - ./mocrat_db/data:/var/lib/postgresql/data
 
-  # discord_app:
-  #   build:
-  #     context: ./discord_app
-  #     dockerfile: Dockerfile
-  #   container_name: discord_app
-  #   volumes:
-  #     - ./discord_app:/usr/app
-  #   tty: true
-  #   stdin_open: true
-  #   command: python src/discord_bot.py
+  discord_app:
+    build:
+      context: ./discord_app
+      dockerfile: Dockerfile
+    container_name: discord_app
+    volumes:
+      - ./discord_app:/usr/app
+    tty: true
+    stdin_open: true
+    command: python src/discord_bot.py

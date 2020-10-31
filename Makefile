@@ -19,10 +19,10 @@ down_docker_compose:
 # mocrat
 rc :=
 compose_exec := docker-compose exec 
-exec_mocrat_app := docker container exec mocrat_app
+exec_mocrat_app := docker container exec mocrat-app
 
 # mocrat_app
-container_name := mocrat_app
+container_name := mocrat-app
 login_mocrat:
 	${compose_exec} ${container_name} bash
 	
@@ -42,6 +42,10 @@ migrate:
 # mocrat_db
 login_mocrat_db:
 	make login_mocrat container_name=mocrat_db
+
+# discord_app
+login_discord_app:
+	make login_mocrat container_name=discord_app
 	
 # mocrat_utils
 # TODO: なんでexecじゃないとrequests通らないん？？runだと新規でコンテナ立てるから？

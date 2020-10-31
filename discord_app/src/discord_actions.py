@@ -1,4 +1,5 @@
 import discord
+import requests
 
 from config.common_logger import *
 from config.environ_config import env
@@ -15,15 +16,34 @@ class GenericRoomAction(object):
         self.post_items_arr = []
 
     def return_generic_post_items(self):
-        if self.message_first_query == "hatebu":
+        if self.message_first_query == "登録":
+            self.create_chibamoku_user()
+
+        elif self.message_first_query == "hatebu":
             self.hatebu()
         
         else:
             self.talk_reply()
 
         return self.post_items_arr
+
+    def create_chibamoku_user(self):
+        app_logger.info("CALL : create_chibamoku_user()")
+        base_url = env("BASE_URL")
+        # chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API")
+
+        # print(chibamoku_user_api)
+        # print(requests.get(chibamoku_user_api))
+
+        chibamoku_user_api = env("MOCRAT_APP_URL") + env("CHIBAMOKU_USER_API")
+
+        print(chibamoku_user_api)
+        print(requests.get(chibamoku_user_api))
+
+        return ["hello"]
     
     def talk_reply(self):
+        app_logger.info("CALL : talk_reply()")
         query = self.message_first_query
         reply = talk_api.call_talk_api(query)
 
@@ -31,6 +51,7 @@ class GenericRoomAction(object):
         return
 
     def hatebu(self):
+        app_logger.info("CALL : hatebu()")
         items = hatebu_utils.return_tophatebu_itposts()
 
         self.post_items_arr = [item[0] + ":" + item[1] for item in items]
