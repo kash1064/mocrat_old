@@ -1,4 +1,4 @@
-from .models import User, ChibaMokuUser, ChibaMokuActivityLog
+from .models import User, ChibaMokuUser, ChibaMokuActivity, ChibaMokuActivityLog
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 from django.utils.translation import gettext, gettext_lazy as _
@@ -22,9 +22,14 @@ class ChibaMokuUserAdmin(admin.ModelAdmin):
     fields = ['discord_id', 'display_name', 'level', 'total_exp', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
 
+class ChibaMokuActivityAdmin(admin.ModelAdmin):
+    fields = ['category', 'get_exp', 'created_at', 'updated_at']
+    readonly_fields = ['created_at', 'updated_at']
+
 class ChibaMokuActivityLogAdmin(admin.ModelAdmin):
     fields = ['chibamoku_activity', 'category', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
 
 admin.site.register(ChibaMokuUser, ChibaMokuUserAdmin)
+admin.site.register(ChibaMokuActivity, ChibaMokuActivityAdmin)
 admin.site.register(ChibaMokuActivityLog, ChibaMokuActivityLogAdmin)

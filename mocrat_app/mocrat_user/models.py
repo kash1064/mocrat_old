@@ -122,17 +122,31 @@ class ChibaMokuUser(models.Model):
 
     def __str__(self):
         return self.display_name
-    
-class ChibaMokuActivityLog(models.Model):
+
+class ChibaMokuActivity(models.Model):
     class Meta:
         db_table = "chibamoku_activity"
         ordering = ["created_at"]
     
-    chibamoku_activity = models.ForeignKey(ChibaMokuUser, on_delete=models.CASCADE)
     category = models.CharField(verbose_name="ActivityCategory", max_length=150, default="")
+    get_exp = models.IntegerField(null=False, blank=False, default=100)
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.category
+    
+class ChibaMokuActivityLog(models.Model):
+    class Meta:
+        db_table = "chibamoku_activity_log"
+        ordering = ["created_at"]
+    
+    chibamoku_activity = models.ForeignKey(ChibaMokuUser, on_delete=models.CASCADE)
+    category = models.ForeignKey(ChibaMokuActivity, on_delete=models.CASCADE) 
+
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.chibamoku_activity.display_name + ":" + self.category.category
