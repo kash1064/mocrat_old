@@ -32,9 +32,7 @@ class GenericRoomAction(object):
             self.hatebu()
         
         else:
-            self.get_exp = 100
-            self.update_userdata()
-            # self.talk_reply()
+            self.talk_reply()
 
         return self.post_items_arr
 
@@ -155,7 +153,7 @@ class FurikaeriRoomAction(Moku2RoomAction):
         else:
             self.return_generic_post_items()
             self.update_userdata()
-            
+
         return self.post_items_arr
 
 
