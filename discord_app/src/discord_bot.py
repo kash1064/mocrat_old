@@ -27,7 +27,7 @@ async def on_message(message):
         
         if message.mentions[0].display_name == "mocrat":
             if message.channel.name == "朝活もくもく会":
-                mocrat_actions = Asakatsu2RoomAction(message)
+                mocrat_actions = AsakatsuRoomAction(message)
                 post_item_arr = mocrat_actions.return_post_items()
 
             elif  message.channel.name == "もくもく会":
@@ -35,8 +35,8 @@ async def on_message(message):
                 post_item_arr = mocrat_actions.return_moku2_post_items()
 
             elif message.channel.name == "振り返り部屋":
-                mocrat_actions = GenericRoomAction(message)
-                post_item_arr = mocrat_actions.return_generic_post_items()
+                mocrat_actions = FurikaeriRoomAction(message)
+                post_item_arr = mocrat_actions.return_post_items()
             
             elif message.channel.name == "資格勉強の部屋":
                 mocrat_actions = GenericRoomAction(message)

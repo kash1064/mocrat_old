@@ -98,7 +98,6 @@ class GenericRoomAction(object):
         self.post_items_arr = [item[0] + ":" + item[1] for item in items]
         return
 
-
     def update_userdata(self):
         app_logger.info("CALL : update_userdata()")
     
@@ -127,6 +126,8 @@ class Moku2RoomAction(GenericRoomAction):
         if self.message_first_query == "プロパティ":
             self.post_items_arr = ["ここはもくもく会の部屋です！\nもくもく会に参加すると手に入る経験値は 100 EXP です！"]
         
+        # elif self.message_first_query == "成果報告":
+
         else:
             self.return_generic_post_items()
 
@@ -142,6 +143,21 @@ class Asakatsu2RoomAction(Moku2RoomAction):
             self.return_moku2_post_items()
 
         return self.post_items_arr
+
+class FurikaeriRoomAction(Moku2RoomAction):
+    def return_post_items(self):
+        if self.message_first_query == "プロパティ":
+            self.post_items_arr = ["ここは振り返りの部屋です！\n振り返りをすると手に入る経験値は 100 EXP です！"]
+        
+        elif self.message_first_query == "振り返り":
+            self.get_exp = 100
+
+        else:
+            self.return_generic_post_items()
+            self.update_userdata()
+            
+        return self.post_items_arr
+
 
 if __name__ == "__main__":
     pass
