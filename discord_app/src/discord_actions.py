@@ -2,6 +2,8 @@ import ast
 import discord
 import requests
 
+from discord_user import *
+
 from config.common_logger import *
 from config.environ_config import env
 
@@ -15,6 +17,9 @@ class GenericRoomAction(object):
         self.message = message
         self.message_first_query = self.message.content.split(" ")[1]
         self.post_items_arr = []
+        self.get_exp = 0
+
+        self.discord_user = GenericDiscordUser(self.message)
 
     def return_generic_post_items(self):
         if self.message_first_query == "登録":
@@ -27,70 +32,54 @@ class GenericRoomAction(object):
             self.hatebu()
         
         else:
-            self.talk_reply()
+            self.get_exp = 100
+            self.update_userdata()
+            # self.talk_reply()
 
         return self.post_items_arr
 
     def create_chibamoku_user(self):
         app_logger.info("CALL : create_chibamoku_user()")
-        base_url = env("MOCRAT_APP_URL")
-        chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API")
 
-        chibamoku_user_data = {
-            "discord_id" : self.message.author.id,
-            "display_name" : self.message.author.display_name
-        }
+        response = self.discord_user.create_new_discord_user()
 
-        try:
-            app_logger.info("POST : {}".format(chibamoku_user_api))
-            response = requests.post(chibamoku_user_api, data=chibamoku_user_data)
+        if response.status_code == 201:
+            self.post_items_arr = ["ちばもく会へようこそ！\n新規ユーザー登録が完了しました！"]
 
-            if response.status_code == 201:
-                self.post_items_arr = ["ちばもく会へようこそ！\n新規ユーザー登録が完了しました！"]
-
-            else:
-                """
-                > response.text
-                '{"discord_id":["この discord id を持った chiba moku user が既に存在します。"]}'
-                """
-                self.post_items_arr = ast.literal_eval(response.text)["discord_id"]
-        
-        except Exception as e:
-            #TODO: discord 側にも、エラーをDiscord通知する機能を実装する
-            # error_notify.error_notifier(sys.exc_info()[0], e.args)
-            logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
+        else:
+            """
+            > response.text
+            '{"discord_id":["この discord id を持った chiba moku user が既に存在します。"]}'
+            """
+            self.post_items_arr = ast.literal_eval(response.text)["discord_id"]
+    
+        # except Exception as e:
+        #     #TODO: discord 側にも、エラーをDiscord通知する機能を実装する
+        #     # error_notify.error_notifier(sys.exc_info()[0], e.args)
+        #     logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
 
         return
 
     def check_status(self):
         app_logger.info("CALL : check_status()")
-        base_url = env("MOCRAT_APP_URL")
-        user_id = self.message.author.id
-        chibamoku_user_api = base_url + env("CHIBAMOKU_USER_API") + str(user_id) + "/"
 
-        try:
-            app_logger.info("GET : {}".format(chibamoku_user_api))
-            response = requests.get(chibamoku_user_api)
+        response = self.discord_user.get_own_userdata()
 
-            if response.status_code == 200:
-                status_data = ast.literal_eval(response.text)
-                user_name = status_data["display_name"]
-                level = status_data["level"]
-                total_exp = status_data["total_exp"]
+        if response.status_code == 200:
+            self.post_items_arr = [
+                self.message.author.mention + " さんのステータスを表示します。" + "\n" \
+                + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
+                + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
+                + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
+                + "この調子で頑張りましょう！"
+            ]
 
-                self.post_items_arr = [
-                    self.message.author.mention + " さんのステータスを表示します。" + "\n" \
-                    + "現在のレベル ： " + str(level) + "\n" \
-                    + "総獲得経験値 : " + str(total_exp) + "\n" \
-                    + "この調子で頑張りましょう！"
-                ]
+        else:
+            self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
 
-            else:
-                self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
-
-        except Exception as e:
-            # error_notify.error_notifier(sys.exc_info()[0], e.args)
-            logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
+        # except Exception as e:
+        #     # error_notify.error_notifier(sys.exc_info()[0], e.args)
+        #     logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
 
         return
     
@@ -109,6 +98,30 @@ class GenericRoomAction(object):
         self.post_items_arr = [item[0] + ":" + item[1] for item in items]
         return
 
+
+    def update_userdata(self):
+        app_logger.info("CALL : update_userdata()")
+    
+        # レベルアップ判定
+        if self.discord_user.is_level_up(self.get_exp):
+            self.post_items_arr = [
+                self.message.author.mention + " さんがレベルアップしました！" + "\n" \
+                + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
+                + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
+                + "次のレベルまで : " + str(self.discord_user.next_level_exp) + "\n" \
+                + "この調子で頑張りましょう！"
+            ]
+
+        else:
+            self.check_status()
+       
+        return
+
+    def __del__(self):
+        app_logger.info("CALL : Destructor")
+        pass
+        
+
 class Moku2RoomAction(GenericRoomAction):
     def return_moku2_post_items(self):
         if self.message_first_query == "プロパティ":
@@ -118,6 +131,7 @@ class Moku2RoomAction(GenericRoomAction):
             self.return_generic_post_items()
 
         return self.post_items_arr
+
 
 class Asakatsu2RoomAction(Moku2RoomAction):
     def return_post_items(self):

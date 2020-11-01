@@ -38,7 +38,7 @@ content-type: application/json
     "discord_id" : 7245389194500509,
     "display_name" : "sample2",
     "level" : 2,
-    "total_exp": 400
+    "total_exp": 500
 }
 
 ###
