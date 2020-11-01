@@ -108,7 +108,7 @@ class GenericRoomAction(object):
                 self.message.author.mention + " さんがレベルアップしました！" + "\n" \
                 + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
                 + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
-                + "次のレベルまで : " + str(self.discord_user.next_level_exp) + "\n" \
+                + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
                 + "この調子で頑張りましょう！"
             ]
 

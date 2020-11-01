@@ -30,7 +30,7 @@ class GenericDiscordUser(object):
             status_data = ast.literal_eval(response.text)
             self.level = status_data["level"]
             self.total_exp = status_data["total_exp"]
-            self.next_level_exp = self.level * 100 + (self.level - 1) * 100
+            self.next_level_exp = self.level * 100 * (self.level // 5 + 1)
         
         app_logger.debug("get_own_userdata response : {}".format(response.text))
 
@@ -81,7 +81,7 @@ class GenericDiscordUser(object):
 
         if self.total_exp >= self.next_level_exp:
             app_logger.info("level is up")
-            self.level = round(self.total_exp / 150)
+            self.level += 1
 
             is_level_up = True
 
