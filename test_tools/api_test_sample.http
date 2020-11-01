@@ -30,6 +30,18 @@ content-type: application/json
 }
 
 ###
+# chibamoku user update
+PUT http://localhost:8000/mocrat_user/api/v1/chibamoku-user/7245389194500509/ HTTP/1.1
+content-type: application/json
+
+{
+    "discord_id" : 7245389194500509,
+    "display_name" : "sample2",
+    "level" : 2,
+    "total_exp": 400
+}
+
+###
 # chibamoku activity logs
 GET http://localhost:8000/mocrat_user/api/v1/chibamoku-activity-logs/ HTTP/1.1
 content-type: application/json

@@ -86,7 +86,7 @@ class GenericRoomAction(object):
                 ]
 
             else:
-                self.post_items_arr = ast.literal_eval(response.text)
+                self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
 
         except Exception as e:
             # error_notify.error_notifier(sys.exc_info()[0], e.args)

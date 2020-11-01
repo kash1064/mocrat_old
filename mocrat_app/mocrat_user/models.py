@@ -128,7 +128,7 @@ class ChibaMokuActivity(models.Model):
         db_table = "chibamoku_activity"
         ordering = ["created_at"]
     
-    category = models.CharField(verbose_name="ActivityCategory", max_length=150, default="")
+    category = models.CharField(primary_key=True, verbose_name="ActivityCategory", max_length=150, default="")
     get_exp = models.IntegerField(null=False, blank=False, default=100)
 
     created_at = models.DateTimeField(default=timezone.now)
