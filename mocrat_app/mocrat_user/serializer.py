@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, ChibaMokuUser
+from .models import User, ChibaMokuUser, ChibaMokuActivityLog
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,4 +25,16 @@ class ChibaMokuUserSerializer(serializers.ModelSerializer):
         #     'updated_at',
         # ]
         exclude = ['created_at']
-        extra_kwargs = {'password': {'write_only': True}}
+
+
+class ChibaMokuActivityLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChibaMokuActivityLog
+        # fields = [
+        #     'chibamoku_activity',
+        #     'category',
+        #     'level',
+        #     'created_at',
+        #     'updated_at',
+        # ]
+        exclude = ['created_at']
