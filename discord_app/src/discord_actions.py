@@ -149,10 +149,10 @@ class FurikaeriRoomAction(Moku2RoomAction):
         
         elif self.message_first_query == "振り返り":
             self.get_exp = 100
+            self.update_userdata()
 
         else:
             self.return_generic_post_items()
-            self.update_userdata()
 
         return self.post_items_arr
 
