@@ -147,7 +147,8 @@ class FurikaeriRoomAction(GenericRoomAction):
         if self.message_first_query == "プロパティ":
             self.post_items_arr = ["ここは振り返りの部屋です！\n振り返りをすると手に入る経験値は 100 EXP です！"]
         
-        elif self.message_first_query == "振り返り":
+        # TODO: テキストがスペースで区切られていなかった場合の対応方法
+        elif "振り返り" in self.message_first_query:
             self.get_exp = 100
             self.update_userdata()
 
