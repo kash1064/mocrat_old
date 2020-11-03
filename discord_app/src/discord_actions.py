@@ -142,7 +142,7 @@ class Asakatsu2RoomAction(Moku2RoomAction):
 
         return self.post_items_arr
 
-class FurikaeriRoomAction(Moku2RoomAction):
+class FurikaeriRoomAction(GenericRoomAction):
     def return_post_items(self):
         if self.message_first_query == "プロパティ":
             self.post_items_arr = ["ここは振り返りの部屋です！\n振り返りをすると手に入る経験値は 100 EXP です！"]
