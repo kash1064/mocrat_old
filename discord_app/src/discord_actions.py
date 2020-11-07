@@ -67,13 +67,13 @@ class GenericRoomAction(object):
         response = self.discord_user.get_own_userdata()
 
         if response.status_code == 200:
-            self.post_items_arr = [
+            self.post_items_arr.append(
                 self.message.author.mention + " さんのステータスを表示します。" + "\n" \
                 + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
                 + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
                 + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
                 + "この調子で頑張りましょう！"
-            ]
+            )
 
         else:
             self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
@@ -140,13 +140,13 @@ class GenericRoomAction(object):
     
         # レベルアップ判定
         if self.discord_user.is_level_up(self.get_exp):
-            self.post_items_arr = [
+            self.post_items_arr.append(
                 self.message.author.mention + " さんがレベルアップしました！" + "\n" \
                 + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
                 + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
                 + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
                 + "この調子で頑張りましょう！"
-            ]
+            )
 
         else:
             self.check_status()
@@ -177,6 +177,7 @@ class Moku2RoomAction(GenericRoomAction):
             self.post_items_arr = ["ここはもくもく会の部屋です！\nもくもく会に参加すると手に入る経験値は 150 EXP です！"]
         
         elif re.match(self.moku2_result_regex, self.message_first_query):
+            self.post_items_arr = ["ありがとうございます、もくもく会の成果報告を受け付けました！\n150 EXP が付与されます！"]
             self.get_exp = 150
             self.update_userdata()
 
@@ -196,6 +197,7 @@ class AsakatsuRoomAction(Moku2RoomAction):
             self.post_items_arr = ["ここは朝活もくもく会の部屋です！\n朝活もくもく会に参加すると手に入る経験値は 100 EXP です！"]
         
         elif re.match(self.moku2_result_regex, self.message_first_query):
+            self.post_items_arr = ["ありがとうございます、朝活もくもく会の成果報告を受け付けました！\n100 EXP が付与されます！"]
             self.get_exp = 100
             self.update_userdata()
 
@@ -223,6 +225,7 @@ class FurikaeriRoomAction(GenericRoomAction):
             self.post_items_arr = ["ここは振り返りの部屋です！\n振り返りをすると手に入る経験値は 100 EXP です！"]
         
         elif re.match(self.furikaeri_regex, self.message_first_query):
+            self.post_items_arr = ["ありがとうございます、振り返り報告を受け付けました！\n100 EXP が付与されます！"]
             self.get_exp = 100
             self.update_userdata()
 
@@ -246,9 +249,10 @@ class LearningLogRoom(GenericRoomAction):
 
     def return_post_items(self):
         if re.match(self.room_property_regex, self.message_first_query):
-            self.post_items_arr = ["ここは学習の記録の部屋です！\n学んだことを共有すると手に入る経験値は 50 EXP です！"]
+            self.post_items_arr = ["ここは作業ログの部屋です！\n学んだことを共有すると手に入る経験値は 50 EXP です！"]
         
         elif re.match(self.learning_log_regex, self.message_first_query):
+            self.post_items_arr = ["ありがとうございます、学びの共有を受け付けました！\n50 EXP の経験値が付与されます！"]
             self.get_exp = 50
             self.update_userdata()
 
