@@ -160,11 +160,25 @@ class GenericRoomAction(object):
         
 
 class Moku2RoomAction(GenericRoomAction):
+    def __init__(self, message):
+        super().__init__(message)
+
+        self.add_moku2_option_regex()
+
+    def add_moku2_option_regex(self):
+        self.moku2_result_regex = r"^成果報告|^\\mk2"
+
+        self.commands_list["もくもく会の成果報告"] = "成果報告 (\\mk2)"
+
+        return
+
     def return_moku2_post_items(self):
-        if self.message_first_query == "プロパティ":
-            self.post_items_arr = ["ここはもくもく会の部屋です！\nもくもく会に参加すると手に入る経験値は 100 EXP です！"]
+        if re.match(self.room_property_regex, self.message_first_query):
+            self.post_items_arr = ["ここはもくもく会の部屋です！\nもくもく会に参加すると手に入る経験値は 150 EXP です！"]
         
-        # elif self.message_first_query == "成果報告":
+        elif re.match(self.moku2_result_regex, self.message_first_query):
+            self.get_exp = 150
+            self.update_userdata()
 
         else:
             self.return_generic_post_items()
@@ -172,11 +186,19 @@ class Moku2RoomAction(GenericRoomAction):
         return self.post_items_arr
 
 
-class Asakatsu2RoomAction(Moku2RoomAction):
+class AsakatsuRoomAction(Moku2RoomAction):
+    def __init__(self, message):
+        super().__init__(message)
+
+
     def return_post_items(self):
-        if self.message_first_query == "プロパティ":
-            self.post_items_arr = ["ここは朝活もくもく会の部屋です！\n朝活もくもく会に参加すると手に入る経験値は 50 EXP です！"]
+        if re.match(self.room_property_regex, self.message_first_query):
+            self.post_items_arr = ["ここは朝活もくもく会の部屋です！\n朝活もくもく会に参加すると手に入る経験値は 100 EXP です！"]
         
+        elif re.match(self.moku2_result_regex, self.message_first_query):
+            self.get_exp = 100
+            self.update_userdata()
+
         else:
             self.return_moku2_post_items()
 
