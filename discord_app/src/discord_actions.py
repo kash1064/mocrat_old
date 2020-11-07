@@ -236,8 +236,9 @@ class LearningLogRoom(GenericRoomAction):
     def __init__(self, message):
         super().__init__(message)
 
+        self.add_learning_logroom_option_regex()
 
-    def add_get_certification_option_regex(self):
+    def add_learning_logroom_option_regex(self):
         self.learning_log_regex = r"^記録|^\\l"
         self.commands_list["学習や活動の記録"] = "記録 (\\l)"
 
