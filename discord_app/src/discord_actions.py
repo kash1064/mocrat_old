@@ -1,5 +1,6 @@
 import ast
 import discord
+import re
 import requests
 
 from discord_user import *
@@ -21,20 +22,65 @@ class GenericRoomAction(object):
 
         self.discord_user = GenericDiscordUser(self.message)
 
+        self.set_generic_option_regex()
+    
+    def set_generic_option_regex(self):
+        self.user_register_regex = r"^登録"
+        self.user_status_regex = r"^ステータス|^\\s"
+
+        self.commands_list_regex = r"^コマンドリスト|^\\c"
+
+        self.hatebu_top5_regex = r"^hatebu|^\\ht"
+
+        self.commands_list = {
+            "ユーザ登録" : "@mocrat 登録",
+            "ステータスチェック" : "@mocrat ステータス (\\s)",
+            "コマンドリストを表示" : "@mocrat コマンドリスト (\\c)",
+            "はてぶ上位記事を取得" : "@mocrat hatebu (\\ht)",
+        }
+
     def return_generic_post_items(self):
-        if self.message_first_query == "登録":
+        if re.match(self.user_register_regex, self.message_first_query):
             self.create_chibamoku_user()
 
-        elif self.message_first_query == "ステータス":
+        elif re.match(self.user_status_regex, self.message_first_query):
             self.check_status()
 
-        elif self.message_first_query == "hatebu":
+        elif re.match(self.commands_list_regex, self.message_first_query):
+            self.show_commands()
+
+        elif re.match(self.hatebu_top5_regex, self.message_first_query):
             self.hatebu()
         
         else:
             self.talk_reply()
 
         return self.post_items_arr
+
+    # actions
+    def check_status(self):
+        app_logger.info("CALL : check_status()")
+
+        response = self.discord_user.get_own_userdata()
+
+        if response.status_code == 200:
+            self.post_items_arr = [
+                self.message.author.mention + " さんのステータスを表示します。" + "\n" \
+                + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
+                + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
+                + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
+                + "この調子で頑張りましょう！"
+            ]
+
+        else:
+            self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
+
+        # except Exception as e:
+        #     # error_notify.error_notifier(sys.exc_info()[0], e.args)
+        #     logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
+
+        return
+
 
     def create_chibamoku_user(self):
         app_logger.info("CALL : create_chibamoku_user()")
@@ -58,29 +104,25 @@ class GenericRoomAction(object):
 
         return
 
-    def check_status(self):
-        app_logger.info("CALL : check_status()")
 
-        response = self.discord_user.get_own_userdata()
+    def hatebu(self):
+        app_logger.info("CALL : hatebu()")
+        items = hatebu_utils.return_tophatebu_itposts()
 
-        if response.status_code == 200:
-            self.post_items_arr = [
-                self.message.author.mention + " さんのステータスを表示します。" + "\n" \
-                + "現在のレベル ： " + str(self.discord_user.level) + "\n" \
-                + "総獲得経験値 : " + str(self.discord_user.total_exp) + "\n" \
-                + "次のレベルまで : " + str(self.discord_user.next_level_exp - self.discord_user.total_exp) + "\n" \
-                + "この調子で頑張りましょう！"
-            ]
-
-        else:
-            self.post_items_arr = [ast.literal_eval(response.text)["detail"]]
-
-        # except Exception as e:
-        #     # error_notify.error_notifier(sys.exc_info()[0], e.args)
-        #     logger.error("Unexpected error {}\n {}".format(sys.exc_info()[0], e.args))
-
+        self.post_items_arr = [item[0] + ":" + item[1] for item in items]
         return
+
     
+    def show_commands(self):
+        reply = "このルームで使えるコマンド一覧を表示します\n※ ()の中はショートカットコマンド\n\n"
+        for command in self.commands_list:
+            reply += command + " : "
+            reply += self.commands_list[command] + "\n"
+
+        self.post_items_arr.append(reply)
+        return
+
+
     def talk_reply(self):
         app_logger.info("CALL : talk_reply()")
         query = self.message_first_query
@@ -89,12 +131,6 @@ class GenericRoomAction(object):
         self.post_items_arr.append(reply)
         return
 
-    def hatebu(self):
-        app_logger.info("CALL : hatebu()")
-        items = hatebu_utils.return_tophatebu_itposts()
-
-        self.post_items_arr = [item[0] + ":" + item[1] for item in items]
-        return
 
     def update_userdata(self):
         app_logger.info("CALL : update_userdata()")
@@ -113,6 +149,7 @@ class GenericRoomAction(object):
             self.check_status()
        
         return
+
 
     def __del__(self):
         app_logger.info("CALL : Destructor")
