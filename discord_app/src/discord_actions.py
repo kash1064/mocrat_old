@@ -204,6 +204,7 @@ class AsakatsuRoomAction(Moku2RoomAction):
 
         return self.post_items_arr
 
+
 class FurikaeriRoomAction(GenericRoomAction):
     def __init__(self, message):
         super().__init__(message)
@@ -223,6 +224,31 @@ class FurikaeriRoomAction(GenericRoomAction):
         
         elif re.match(self.furikaeri_regex, self.message_first_query):
             self.get_exp = 100
+            self.update_userdata()
+
+        else:
+            self.return_generic_post_items()
+
+        return self.post_items_arr
+
+
+class LearningLogRoom(GenericRoomAction):
+    def __init__(self, message):
+        super().__init__(message)
+
+
+    def add_get_certification_option_regex(self):
+        self.learning_log_regex = r"^記録|^\\l"
+        self.commands_list["学習や活動の記録"] = "記録 (\\l)"
+
+        return
+
+    def return_post_items(self):
+        if re.match(self.room_property_regex, self.message_first_query):
+            self.post_items_arr = ["ここは学習の記録の部屋です！\n学んだことを共有すると手に入る経験値は 50 EXP です！"]
+        
+        elif re.match(self.learning_log_regex, self.message_first_query):
+            self.get_exp = 50
             self.update_userdata()
 
         else:

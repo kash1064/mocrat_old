@@ -38,8 +38,8 @@ async def on_message(message):
                 mocrat_actions = FurikaeriRoomAction(message)
                 post_item_arr = mocrat_actions.return_post_items()
             
-            elif message.channel.name == "資格勉強の部屋":
-                mocrat_actions = GenericRoomAction(message)
+            elif message.channel.name == "作業ログの部屋":
+                mocrat_actions = LearningLogRoom(message)
                 post_item_arr = mocrat_actions.return_generic_post_items()
 
             else:
