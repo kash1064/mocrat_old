@@ -28,15 +28,18 @@ class GenericRoomAction(object):
         self.user_register_regex = r"^登録"
         self.user_status_regex = r"^ステータス|^\\s"
 
+        self.room_property_regex = r"^プロパティ|^\\p"
+        
         self.commands_list_regex = r"^コマンドリスト|^\\c"
 
-        self.hatebu_top5_regex = r"^hatebu|^\\ht"
+        self.hatebu_top5_regex = r"^はてぶ|^\\ht"
 
         self.commands_list = {
-            "ユーザ登録" : "@mocrat 登録",
-            "ステータスチェック" : "@mocrat ステータス (\\s)",
-            "コマンドリストを表示" : "@mocrat コマンドリスト (\\c)",
-            "はてぶ上位記事を取得" : "@mocrat hatebu (\\ht)",
+            "ユーザ登録" : "登録",
+            "ステータスチェック" : "ステータス (\\s)",
+            "コマンドリストを表示" : "コマンドリスト (\\c)",
+            "ルームの情報を表示" : "プロパティ (\\p)",
+            "はてぶ上位記事を取得" : "はてぶ (\\ht)",
         }
 
     def return_generic_post_items(self):
@@ -116,7 +119,7 @@ class GenericRoomAction(object):
     def show_commands(self):
         reply = "このルームで使えるコマンド一覧を表示します\n※ ()の中はショートカットコマンド\n\n"
         for command in self.commands_list:
-            reply += command + " : "
+            reply += command + " :  "
             reply += self.commands_list[command] + "\n"
 
         self.post_items_arr.append(reply)
@@ -180,12 +183,23 @@ class Asakatsu2RoomAction(Moku2RoomAction):
         return self.post_items_arr
 
 class FurikaeriRoomAction(GenericRoomAction):
+    def __init__(self, message):
+        super().__init__(message)
+
+        self.add_furikaeri_option_regex()
+
+    def add_furikaeri_option_regex(self):
+        self.furikaeri_regex = r"^振り返り|^\\f"
+
+        self.commands_list["振り返りを宣言"] = "振り返り (\\f)"
+
+        return
+
     def return_post_items(self):
-        if self.message_first_query == "プロパティ":
+        if re.match(self.room_property_regex, self.message_first_query):
             self.post_items_arr = ["ここは振り返りの部屋です！\n振り返りをすると手に入る経験値は 100 EXP です！"]
         
-        # TODO: テキストがスペースで区切られていなかった場合の対応方法
-        elif "振り返り" in self.message_first_query:
+        elif re.match(self.furikaeri_regex, self.message_first_query):
             self.get_exp = 100
             self.update_userdata()
 
