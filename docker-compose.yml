@@ -40,3 +40,13 @@ services:
     tty: true
     stdin_open: true
     command: python src/discord_bot.py
+
+  invester_app:
+    build:
+      context: ./invester_app
+      dockerfile: Dockerfile
+    container_name: invester-app
+    volumes:
+      - ./invester_app:/usr/app
+    tty: true
+    stdin_open: true
