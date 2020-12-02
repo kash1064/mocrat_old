@@ -2,6 +2,8 @@
 debug.log
 
 mocrat_db/data/
+invester_app/*.exe
+invester_app/*.dll
 
 *__pycache__/
 *.log
