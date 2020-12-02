@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'mocrat_user',
     'mocrat_twitter',
     'mocrat_discord',
+    'mocrat_invester',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
