@@ -1,17 +1,16 @@
 version: "3"
 services:
-  mocrat-nginx:
-      image: nginx:alpine
-      container_name: mocrat-nginx
-      ports:
-        - "8080:8080"
-      volumes:
-        - ./nginx/conf:/etc/nginx/conf.d
-        # - ./nginx/nginx/nginx.conf:/etc/nginx/nginx.conf
-        - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
-        - ./mocrat_app/static:/static
-      depends_on:
-        - mocrat-app
+  # mocrat-nginx:
+  #     image: nginx:alpine
+  #     container_name: mocrat-nginx
+  #     ports:
+  #       - "8080:8080"
+  #     volumes:
+  #       - ./nginx/conf:/etc/nginx/conf.d
+  #       # - ./nginx/nginx/nginx.conf:/etc/nginx/nginx.conf
+  #       - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+  #       - ./mocrat_app/static:/static
+  #     depends_on:
 
   mocrat-app:
     build:
@@ -21,20 +20,20 @@ services:
     container_name: mocrat-app
     volumes:
       - ./mocrat_app:/usr/mocrat/app
-    expose:
-      - "8001"
+    ports:
+      - "8000:8000"
     tty: true
     stdin_open: true
-    command: uwsgi --socket :8001 --module mocrat_config.wsgi --processes 2
+    command: python3 manage.py runserver 0.0.0.0:8000
     depends_on:
         - mocrat_db
-    
+
   mocrat_db:
     build:
       context: ./mocrat_db
       dockerfile: Dockerfile
     container_name: mocrat_db
-    ports: 
+    ports:
       - "5432:5432"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
