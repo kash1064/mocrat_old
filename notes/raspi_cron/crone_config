@@ -2,16 +2,22 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
 
 # 毎日 18:00 に朝活通知を送信
-00 18 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_scheduler" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+# 0 18 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_scheduler" >> /home/ubuntu/log/mocrat_cron.log 2>&1
 
 # 毎日 08:30 に朝活通知を送信
-30 8 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_closer" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+# 30 8 * * * sh -c "cd /home/ubuntu/mocrat && make asakatsu_closer" >> /home/ubuntu/log/mocrat_cron.log 2>&1
 
-# 毎日 22:0 に振り返り通知
-0 22 * * * sh -c "cd /home/ubuntu/mocrat && make furikaeri_reminder" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+# 毎日 22:30 に振り返り通知
+# 0 22 * * * sh -c "cd /home/ubuntu/mocrat && make furikaeri_reminder" >> /home/ubuntu/log/mocrat_cron.log 2>&1
 
 # 定期タスク
-0 * * * * sh -c "cd /home/ubuntu/mocrat && make discord_heartbeat" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+#* * * * * ubuntu sh -c "whoami" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+
+0 * * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make discord_heartbeat" >> /home/ubuntu/log/mocrat_cron.log 2>&1
 
 # 毎日 18:30 から 19:30 まで、15 分ごとに最大 20 個ずつのいいね
-30 18 * * * sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid= auto_fav_word= auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+30 18 * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid=yuki_kashiwaba auto_fav_word=AtCoder auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+45 18 * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid=yuki_kashiwaba auto_fav_word=Python auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+0 19 * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid=yuki_kashiwaba auto_fav_word=#HackTheBox auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+15 19 * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid=yuki_kashiwaba auto_fav_word=自作OS auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1
+30 19 * * * ubuntu sh -c "cd /home/ubuntu/mocrat && make call_auto_fav_by_query twitter_auth_userid=yuki_kashiwaba auto_fav_word=#TryHackMe auto_fav_count=20" >> /home/ubuntu/log/mocrat_cron.log 2>&1

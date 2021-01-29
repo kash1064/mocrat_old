@@ -2,7 +2,9 @@
 
 ## 設定
 ```
-sudo crontab -u ubuntu -e
+sudo vim /etc/cron.d/ubuntu
+sudo chmod 644 /etc/cron.d/ubuntu
+sudo chown root:root /etc/cron.d/ubuntu
 sudo service cron restart
 ```
 
